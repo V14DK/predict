@@ -86,7 +86,7 @@ class GensimVectorizer(BaseEstimator, TransformerMixin):
         if not self.dict:
             self.dict = Dictionary(bigram_token)
             self.dict.filter_extremes(no_below=3, no_above=0.8)
-            self.dict.save('new_dict.pkl')
+            self.dict.save('new_dict')
         self.corpus = [self.dict.doc2bow(line) for line in bigram_token]
         self.tf_model = TfidfModel(self.corpus)
         return self
