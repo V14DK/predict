@@ -52,7 +52,7 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
         text = self.__remove_mail(text)
         text = text.lower()
         text = re.sub("[^а-яёйa-z0-9]", " ", text)
-        text = re.sub("\s+", " ", text)
+        text = re.sub(r"\s+", " ", text)
         tbl = text.maketrans('', '', spec_chars)
         text = text.translate(tbl)
         text = nltk.word_tokenize(text)
@@ -62,8 +62,8 @@ class TextNormalizer(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         return self
 
-    def transform(self, document): #documents
-        return [self.__mytokenize(document)] #for document in documents] #document['Text'] для kaggle
+    def transform(self, document):
+        return [self.__mytokenize(document)]
 
 
 class GensimVectorizer(BaseEstimator, TransformerMixin):
@@ -101,6 +101,7 @@ class GensimLsi(BaseEstimator, TransformerMixin):
         self.path_dict = path_dict
         self.path_model = path_model
         self.num_topics = num_topics
+        self.model = None
         self.load()
 
     def load(self):
